@@ -1,26 +1,61 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const fadeInElements = document.querySelectorAll('.fade-in');
-    const popUpElements = document.querySelectorAll('.pop-up');
+document.addEventListener("DOMContentLoaded", function () {
+    const sections = document.querySelectorAll('.fade-in');
+    const nav = document.querySelector('header');
+    let lastScrollY = window.scrollY;
 
-    const handleScroll = () => {
-        fadeInElements.forEach(el => {
-            const rect = el.getBoundingClientRect();
-            if (rect.top <= window.innerHeight - 100) {
-                el.classList.add('visible');
+    function isInViewport(element) {
+        const rect = element.getBoundingClientRect();
+        return (
+            rect.top < window.innerHeight && rect.bottom > 0
+        );
+    }
+
+    function checkVisibility() {
+        sections.forEach(section => {
+            if (isInViewport(section)) {
+                section.classList.add('visible');
+            }
+        });
+    }
+
+    checkVisibility();
+
+    window.addEventListener('scroll', function () {
+        checkVisibility();
+
+        if (window.innerWidth <= 768) {
+            if (window.scrollY > lastScrollY) {
+                nav.classList.add('hidden'); 
             } else {
-                el.classList.remove('visible');
-                el.classList.add('fade-out');
+                nav.classList.remove('hidden'); 
             }
-        });
+            lastScrollY = window.scrollY;
+        }
+    });
 
-        popUpElements.forEach(el => {
-            const rect = el.getBoundingClientRect();
-            if (rect.top <= window.innerHeight - 150) {
-                el.classList.add('visible');
-            }
-        });
-    };
+    const navLinks = document.querySelectorAll('.navigation ul li a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function (event) {
+            event.preventDefault(); 
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
 
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Run on page load to check visibility
+            targetSection.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+
+    const boxes = document.querySelectorAll('.pop-up');
+    boxes.forEach((box, index) => {
+        setTimeout(() => {
+            box.classList.add('visible');
+        }, index * 300);
+    });
+
+    const menuToggle = document.getElementById('mobile-menu');
+    const navList = document.getElementById('nav-list');
+    if (menuToggle) {
+        menuToggle.addEventListener('click', function () {
+            navList.classList.toggle('show');
+        });
+    }
 });
