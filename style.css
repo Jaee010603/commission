@@ -74,7 +74,6 @@ h2 {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-
 .details .box, .project .box {
     background-color: #ecf0f1;
     border: 1px solid #ddd;
@@ -108,7 +107,6 @@ h2 {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-
 
 .more .container .box {
     width: 45%;
@@ -194,6 +192,8 @@ h2 {
     color: white;
     padding: 20px 0;
     text-align: center;
+    margin-top: 0; 
+    margin-right: 0;
 }
 
 .footer p {
@@ -237,14 +237,16 @@ h2 {
     .container {
         flex-direction: column;
         align-items: center;
+        padding: 0; 
     }
 
     .box {
-        width: 90%;
+        width: 90%; 
+        margin: 0; 
     }
 
     h2 {
-        font-size: 2rem;
+        font-size: 2rem; 
     }
 
     .navigation ul li {
@@ -261,5 +263,10 @@ h2 {
 
     header.hidden {
         top: -800px; 
+    }
+
+    section, .footer {
+        padding: 20px 0; 
+        margin: 0; 
     }
 }
